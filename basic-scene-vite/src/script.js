@@ -4,6 +4,10 @@ const canvas = document.querySelector("canvas.webgl");
 
 const scene = new THREE.Scene();
 
+// Axes Helper
+const axesHelper = new THREE.AxesHelper(2);
+scene.add(axesHelper);
+
 //Object
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
