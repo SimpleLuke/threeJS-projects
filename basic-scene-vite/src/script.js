@@ -53,4 +53,17 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 
-renderer.render(scene, camera);
+const clock = new THREE.Clock();
+
+const tick = () => {
+  const elaspedTime = clock.getElapsedTime();
+
+  //Update objects
+  group.rotation.y = elaspedTime;
+  group.rotation.x = elaspedTime;
+
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(tick);
+};
+
+tick();
