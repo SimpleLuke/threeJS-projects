@@ -1,18 +1,19 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 const scene = new THREE.Scene();
 
 // Axes Helper
-const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
+// const axesHelper = new THREE.AxesHelper(2);
+// scene.add(axesHelper);
 /**
  * Objects
  */
 const group = new THREE.Group();
 group.scale.y = 2;
-group.rotation.y = 0.2;
+// group.rotation.y = 0.2;
 scene.add(group);
 
 const cube1 = new THREE.Mesh(
@@ -47,6 +48,9 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 3;
 scene.add(camera);
 
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+
 //Renderer
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
@@ -59,8 +63,10 @@ const tick = () => {
   const elaspedTime = clock.getElapsedTime();
 
   //Update objects
-  group.rotation.y = elaspedTime;
-  group.rotation.x = elaspedTime;
+  //   group.rotation.y = elaspedTime;
+  //   group.rotation.x = elaspedTime;
+
+  controls.update();
 
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
