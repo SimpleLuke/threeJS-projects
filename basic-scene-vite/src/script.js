@@ -1,5 +1,11 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import * as dat from "dat.gui";
+import gsap from "gsap";
+
+//Debug
+const gui = new dat.GUI();
+
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -87,7 +93,12 @@ cube3.position.x = 1.5;
 group.add(cube3);
 
 // Create random triangles with Buffer Geometry
-
+const parameters = {
+  color: 0xff0000,
+  spin: () => {
+    gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + Math.PI * 2 });
+  },
+};
 const geometry = new THREE.BufferGeometry();
 
 const count = 50;
@@ -99,12 +110,24 @@ for (let i = 0; i < positionArrays.length; i++) {
 const positionAttribute = new THREE.BufferAttribute(positionArrays, 3);
 geometry.setAttribute("position", positionAttribute);
 const material = new THREE.MeshBasicMaterial({
-  color: 0xff0000,
+  color: parameters.color,
   wireframe: true,
 });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
+// Debug GUI
+gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("elevation");
+gui.add(mesh, "visible");
+gui.add(material, "wireframe");
+
+// Debug GUI Color and function
+
+gui.add(parameters, "spin");
+
+gui.addColor(parameters, "color").onChange(() => {
+  material.color.set(parameters.color);
+});
 //Renderer
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
