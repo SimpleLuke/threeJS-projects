@@ -63,7 +63,7 @@ window.addEventListener("dblclick", () => {
 const group = new THREE.Group();
 group.scale.y = 2;
 // group.rotation.y = 0.2;
-scene.add(group);
+// scene.add(group);
 
 const cube1 = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
@@ -85,6 +85,25 @@ const cube3 = new THREE.Mesh(
 );
 cube3.position.x = 1.5;
 group.add(cube3);
+
+// Create random triangles with Buffer Geometry
+
+const geometry = new THREE.BufferGeometry();
+
+const count = 50;
+const positionArrays = new Float32Array(count * 3 * 3);
+for (let i = 0; i < positionArrays.length; i++) {
+  positionArrays[i] = (Math.random() - 0.5) * 4;
+}
+
+const positionAttribute = new THREE.BufferAttribute(positionArrays, 3);
+geometry.setAttribute("position", positionAttribute);
+const material = new THREE.MeshBasicMaterial({
+  color: 0xff0000,
+  wireframe: true,
+});
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 //Renderer
 const renderer = new THREE.WebGLRenderer({
