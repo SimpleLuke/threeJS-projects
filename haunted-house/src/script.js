@@ -159,6 +159,7 @@ for (let i = 0; i < 50; i++) {
 
   // Create the mesh
   const grave = new THREE.Mesh(graveGeometry, graveMaterial);
+  grave.castShadow = true;
 
   // Position
   grave.position.set(x, 0.3, z);
@@ -224,6 +225,24 @@ doorLight.position.set(0, 2.2, 2.7);
 house.add(doorLight);
 
 /**
+ * Shadows
+ */
+
+moonLight.castShadow = true;
+doorLight.castShadow = true;
+ghost1.castShadow = true;
+ghost2.castShadow = true;
+ghost3.castShadow = true;
+
+walls.castShadow = true;
+bush1.castShadow = true;
+bush2.castShadow = true;
+bush3.castShadow = true;
+bush4.castShadow = true;
+
+floor.receiveShadow = true;
+
+/**
  * Sizes
  */
 const sizes = {
@@ -273,6 +292,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setClearColor("#262837");
+renderer.shadowMap.enabled = true;
 
 /**
  * Animate
