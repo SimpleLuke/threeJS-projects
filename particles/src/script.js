@@ -25,7 +25,7 @@ const particleTexture = textureLoader.load("/textures/particles/2.png");
  */
 // Geometry
 const particlesGeometry = new THREE.BufferGeometry();
-const count = 5000;
+const count = 20000;
 
 const positions = new Float32Array(count * 3); // Multiply by 3 because each position is composed of 3 values (x, y, z)
 
@@ -49,16 +49,11 @@ particlesMaterial.alphaMap = particleTexture;
 // particlesMaterial.alphaTest = 0.001
 // particlesMaterial.depthTest = false
 particlesMaterial.depthWrite = false;
+particlesMaterial.blending = THREE.AdditiveBlending;
 
 // Points
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
 scene.add(particles);
-
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(),
-  new THREE.MeshBasicMaterial()
-);
-scene.add(cube);
 
 /**
  * Sizes
