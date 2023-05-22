@@ -87,6 +87,10 @@ window.addEventListener("resize", () => {
 /**
  * Camera
  */
+// Group
+const cameraGroup = new THREE.Group();
+scene.add(cameraGroup);
+
 // Base camera
 const camera = new THREE.PerspectiveCamera(
   35,
@@ -96,6 +100,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 6;
 scene.add(camera);
+cameraGroup.add(camera);
 
 /**
  * Renderer
@@ -118,6 +123,20 @@ window.addEventListener("scroll", () => {
 });
 
 /**
+ * Cursor
+ */
+const cursor = {};
+cursor.x = 0;
+cursor.y = 0;
+
+window.addEventListener("mousemove", (event) => {
+  cursor.x = event.clientX / sizes.width - 0.5;
+  cursor.y = event.clientY / sizes.height - 0.5;
+
+  console.log(cursor);
+});
+
+/**
  * Animate
  */
 const clock = new THREE.Clock();
@@ -133,6 +152,11 @@ const tick = () => {
 
   // Animate camera
   camera.position.y = (-scrollY / sizes.height) * objectsDistance;
+
+  const parallaxX = cursor.x;
+  const parallaxY = -cursor.y;
+  cameraGroup.position.x = parallaxX;
+  cameraGroup.position.y = parallaxY;
 
   // Render
   renderer.render(scene, camera);
