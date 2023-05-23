@@ -23,8 +23,25 @@ debugObject.createBox = () => {
     z: (Math.random() - 0.5) * 3,
   });
 };
+
+// Reset
+debugObject.reset = () => {
+  for (const object of objectsToUpdate) {
+    console.log(objectsToUpdate);
+    // Remove body
+    object.body.removeEventListener("collide", playHitSound);
+    world.removeBody(object.body);
+
+    // Remove mesh
+    scene.remove(object.mesh);
+  }
+  //empty the objectsToUpdate array
+  objectsToUpdate.splice(0, objectsToUpdate.length);
+};
+
 gui.add(debugObject, "createSphere");
 gui.add(debugObject, "createBox");
+gui.add(debugObject, "reset");
 
 /**
  * Base
